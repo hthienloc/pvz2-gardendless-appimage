@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src-tauri/**'
+      - '.github/workflows/build.yml'
+      - 'package.json'
+  schedule:
+    - cron: '0 0 1,15 * *' # Chạy vào ngày 1 và 15 hằng tháng (~mỗi 2 tuần)
   workflow_dispatch:
 
 permissions:
