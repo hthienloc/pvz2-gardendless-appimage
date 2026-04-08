@@ -1,0 +1,17 @@
+[package]
+name = "pvz2-gardenless"
+version = "0.1.0"
+description = "A native wrapper for PvZ2 Gardenless"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5" }
+
+[dependencies]
+tauri = { version = "1.6", features = [] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+custom-protocol = ["tauri/custom-protocol"]

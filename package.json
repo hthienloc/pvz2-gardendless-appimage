@@ -1,0 +1,11 @@
+{
+  "name": "pvz2-gardenless",
+  "version": "0.1.0",
+  "description": "Native runner for PVZ2 Gardenless",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.6.0"
+  }
+}
