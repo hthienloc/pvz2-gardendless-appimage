@@ -39,14 +39,14 @@
       },
       "resources": [],
       "shortDescription": "",
-      "targets": "all",
+      "targets": ["appimage"],
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256"
       }
     },
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: https: data:;"
     },
     "updater": {
       "active": true,
