@@ -44,6 +44,11 @@ jobs:
 
       - name: Build Electron App
         run: npm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List built files
+        run: ls -R dist_electron/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
