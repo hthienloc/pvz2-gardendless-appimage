@@ -26,7 +26,7 @@ If auto-update isn't working in **Gear Lever**, please configure it manually:
 4. Select **Source**: `Github`.
 5. Enter the following details:
    - **Repo URL**: `https://github.com/hthienloc/pvz2-gardendless-appimage`
-   - **Release file name**: `PvZ2.Gardendless-*.AppImage`
+   - **Release file name**: `PvZ2*Gardendless-*.AppImage`
 6. Disable **Allow pre-releases**.
 7. Click **Save**.
 
