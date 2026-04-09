@@ -2,10 +2,33 @@
   "name": "pvz2-gardenless",
   "version": "0.1.0",
   "description": "Native runner for PVZ2 Gardenless",
+  "main": "electron-main.js",
   "scripts": {
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "electron:dev": "electron .",
+    "electron:build": "electron-builder -l AppImage"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.6.0"
+    "@tauri-apps/cli": "^1.6.0",
+    "electron": "^41.2.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.pvzge.gardenless",
+    "productName": "PvZ2 Gardendless",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "electron-main.js"
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game"
+    }
   }
 }

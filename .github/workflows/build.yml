@@ -7,6 +7,7 @@ on:
       - 'src-tauri/**'
       - '.github/workflows/build.yml'
       - 'package.json'
+      - 'electron-main.js'
   schedule:
     - cron: '0 0 1,15 * *' # Chạy vào ngày 1 và 15 hằng tháng (~mỗi 2 tuần)
   workflow_dispatch:
@@ -37,28 +38,26 @@ jobs:
           mkdir -p dist
           cp -r game_web/docs/* dist/
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Build Tauri App
-        uses: tauri-apps/tauri-action@v0
+      - name: Build Electron App
+        run: npm run electron:build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         with:
-          tagName: v__VERSION__ # tauri.conf.json version
-          releaseName: "PvZ2 Gardendless v__VERSION__"
-          releaseBody: "Automated Linux build for PvZ2 Gardendless."
-          releaseDraft: true
+          files: dist_electron/*.AppImage
+          tag_name: v0.8.2
+          name: "PvZ2 Gardendless v0.8.2 (Electron)"
+          body: "Automated Linux build for PvZ2 Gardendless using Electron."
+          draft: true
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-bundles
-          path: |
-            src-tauri/target/release/bundle/deb/*.deb
-            src-tauri/target/release/bundle/rpm/*.rpm
-            src-tauri/target/release/bundle/appimage/*.AppImage
-            src-tauri/target/release/bundle/appimage/*.AppImage.tar.gz
+          name: electron-bundles
+          path: dist_electron/*.AppImage
