@@ -1,4 +1,4 @@
-# PVZ2 Gardenless Native Wrapper
+# PVZ2 Gardendless AppImage Wrapper
 
 A standalone [Electron](https://www.electronjs.org/) runner for the [PvZ2 Gardendless](https://github.com/Gzh0821/pvzge_web) web game.
 

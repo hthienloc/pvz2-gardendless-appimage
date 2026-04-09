@@ -1,7 +1,7 @@
 {
-  "name": "pvz2-gardenless",
+  "name": "pvz2-gardendless-appimage",
   "version": "0.8.2",
-  "description": "Native runner for PVZ2 Gardenless",
+  "description": "Native runner for PVZ2 Gardendless",
   "main": "electron-main.js",
   "scripts": {
     "electron:dev": "electron .",
