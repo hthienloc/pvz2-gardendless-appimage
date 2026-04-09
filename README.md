@@ -13,14 +13,14 @@ A high-performance standalone runner for the [PvZ2 Gardendless](https://github.c
 * **⚡ Native Performance**: Runs as a lightweight standalone AppImage for better resource management.
 * **📦 CI/CD Optimized**: Automatic builds and releases powered by GitHub Actions.
 * **🛠 Integrated Hub**: Seamless support for modern AppImage managers (Gear Lever, AppImageLauncher).
-* **🛡 Data Integrity**: Designed to isolate game assets from user save data for worry-free updates.
 
-## 📥 Installation
+## 📦 Installation
 
-1. Navigate to the [Releases](https://github.com/hthienloc/pvz2-gardendless-appimage/releases) page.
-2. Download the latest `.AppImage` file.
-3. Right-click the file -> **Properties** -> **Permissions** -> Enable **Allow executing file as program**.
-4. Double-click to play!
+For the best experience, we recommend using an AppImage manager to handle system integration and automatic updates.
+
+1. Install [Gear Lever](https://github.com/mijorus/gearlever) (Available on Flathub).
+2. Download the latest `.AppImage` file from the [Releases](https://github.com/hthienloc/pvz2-gardendless-appimage/releases) page.
+3. Open the file with **Gear Lever** to integrate it into your application menu.
 
 ## 🔄 Automatic Updates
 
@@ -28,7 +28,7 @@ If auto-discovery fails in **Gear Lever**, apply the following settings in **Upd
 
 * **Source**: `Github`
 * **Repo URL**: `https://github.com/hthienloc/pvz2-gardendless-appimage`
-* **Release file name**: `PvZ2*Gardendless-*.AppImage`
+* **Release file name**: `PvZ2-Gardendless-*.AppImage`
 * **Allow pre-releases**: Disabled
 
 > [!TIP]

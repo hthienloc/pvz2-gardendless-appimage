@@ -14,7 +14,7 @@
   },
   "build": {
     "appId": "com.pvzge.gardenless",
-    "productName": "PvZ2 Gardendless",
+    "productName": "PvZ2-Gardendless",
     "publish": [
       {
         "provider": "github",

@@ -62,11 +62,20 @@ jobs:
           body: |
             Automated Linux build for PvZ2 Gardendless.
 
-            ### Gear Lever Manual Update Settings
+            ### 🚀 Quick Start (CLI)
+            ```bash
+            # Download the AppImage
+            wget https://github.com/hthienloc/pvz2-gardendless-appimage/releases/download/v${{ steps.package-version.outputs.version }}/PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage
+
+            # Install and integrate with Gear Lever
+            flatpak run it.mijorus.gearlever --integrate PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage
+            ```
+
+            ### 🔄 Manual Update (Gear Lever)
             If auto-update is not working, please use the following settings in **Gear Lever**:
             - **Source**: `Github`
             - **Repo URL**: `https://github.com/hthienloc/pvz2-gardendless-appimage`
-            - **Release file name**: `PvZ2*Gardendless-*.AppImage`
+            - **Release file name**: `PvZ2-Gardendless-*.AppImage`
             - **Allow pre-releases**: Disabled
           draft: true
           prerelease: false
