@@ -16,10 +16,19 @@ A standalone [Electron](https://www.electronjs.org/) runner for the [PvZ2 Garden
 
 ## Updates
 
-This AppImage supports **automatic updates** via the standard AppImage update mechanism. We recommend using a manager like:
+### Manual Update (Gear Lever)
 
-- [Gear Lever](https://mioseclab.github.io/GearLever/)
-- [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher)
+If auto-update isn't working in **Gear Lever**, please configure it manually:
+
+1. Open **Gear Lever**.
+2. Select **PvZ2 Gardendless**.
+3. Go to **Update management**.
+4. Select **Source**: `Github`.
+5. Enter the following details:
+   - **Repo URL**: `https://github.com/hthienloc/pvz2-gardendless-appimage`
+   - **Release file name**: `PvZ2.Gardendless-*.AppImage`
+6. Disable **Allow pre-releases**.
+7. Click **Save**.
 
 Alternatively, you can manually download the latest version from the [Releases](https://github.com/hthienloc/pvz2-gardendless-appimage/releases) page.
 

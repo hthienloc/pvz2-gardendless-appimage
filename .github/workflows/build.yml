@@ -54,7 +54,15 @@ jobs:
             dist_electron/*.zsync
           tag_name: v${{ steps.package-version.outputs.version }}
           name: "PvZ2 Gardendless v${{ steps.package-version.outputs.version }}"
-          body: "Automated Linux build for PvZ2 Gardendless."
+          body: |
+            Automated Linux build for PvZ2 Gardendless.
+
+            ### Gear Lever Manual Update Settings
+            If auto-update is not working, please use the following settings in **Gear Lever**:
+            - **Source**: `Github`
+            - **Repo URL**: `https://github.com/hthienloc/pvz2-gardendless-appimage`
+            - **Release file name**: `PvZ2.Gardendless-*.AppImage`
+            - **Allow pre-releases**: Disabled
           draft: true
           prerelease: false
         env:
