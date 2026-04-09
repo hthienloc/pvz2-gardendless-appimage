@@ -11,6 +11,8 @@ function createWindow() {
       contextIsolation: true,
     },
   });
+  
+  win.maximize();
 
   // Chạy game từ thư mục dist
   win.loadFile(path.join(__dirname, 'dist/index.html'));
