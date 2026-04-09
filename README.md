@@ -38,5 +38,5 @@ If auto-discovery fails in **Gear Lever**, apply the following settings in **Upd
 
 ## ❤️ Credits
 
-* **Game Engine**: Originally developed by [Gzh0821](https://github.com/Gzh0821/pvzge_web).
+* **Game Engine**: Originally developed by [Gzh0821](https://github.com/Gzh0821).
 * **Linux Packaging**: Maintained by [hthienloc](https://github.com/hthienloc).
