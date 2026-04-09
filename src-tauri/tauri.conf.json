@@ -49,7 +49,12 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://github.com/hthienloc/pvz2-gardenless/releases/latest/download/updater.json"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZGNTk5MjcxRkVFMjgzM0IKUldRN2crTCtjWkpaYjNQZ2hEV1BHMUtXdnJqeXpGQktGRHRHY3AyZUttMTdLaE11M2RONmFYR1oK"
     },
     "windows": [
       {
