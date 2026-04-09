@@ -2,10 +2,11 @@
   "name": "pvz2-gardendless-appimage",
   "version": "0.8.2",
   "description": "Native runner for PVZ2 Gardendless",
+  "author": "hthienloc",
   "main": "electron-main.js",
   "scripts": {
     "electron:dev": "electron .",
-    "electron:build": "electron-builder -l AppImage"
+    "electron:build": "electron-builder -l AppImage -c.publish=never"
   },
   "devDependencies": {
     "electron": "^41.2.0",
