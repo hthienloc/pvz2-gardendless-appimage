@@ -1,12 +1,11 @@
 # PVZ2 Gardenless Native Wrapper
 
-A lightweight [Tauri](https://tauri.app/) wrapper for the [PvZ2 Gardendless](https://github.com/Gzh0821/pvzge_web) web game.
+A standalone [Electron](https://www.electronjs.org/) runner for the [PvZ2 Gardendless](https://github.com/Gzh0821/pvzge_web) web game.
 
 ## Features
 
-- **Native Linux Build**: Runs as a standalone application (AppImage/Binary).
-- **Lightweight**: Uses the system webview (WebKitGTK) for optimal performance.
-- **Automated Builds**: Built via GitHub Actions.
+- **Native Linux Build**: Runs as a standalone application (AppImage).
+- **Automated Builds**: Built and released via GitHub Actions.
 
 ## How to use
 

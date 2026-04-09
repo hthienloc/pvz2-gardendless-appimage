@@ -40,8 +40,6 @@ jobs:
 
       - name: Build Electron App
         run: npm run electron:build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -49,8 +47,8 @@ jobs:
         with:
           files: dist_electron/*.AppImage
           tag_name: v0.8.2
-          name: "PvZ2 Gardendless v0.8.2 (Electron)"
-          body: "Automated Linux build for PvZ2 Gardendless using Electron."
+          name: "PvZ2 Gardendless v0.8.2"
+          body: "Automated Linux build for PvZ2 Gardendless."
           draft: true
           prerelease: false
         env:
@@ -59,5 +57,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: electron-bundles
+          name: electron-appimage
           path: dist_electron/*.AppImage
