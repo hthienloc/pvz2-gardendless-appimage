@@ -30,6 +30,9 @@ If auto-update isn't working in **Gear Lever**, please configure it manually:
 6. Disable **Allow pre-releases**.
 7. Click **Save**.
 
+> [!NOTE]
+> Unlike Docker updates, updating via AppImage **does not require manual backups** (export/import). Only core game files are overwritten, while your save data and settings remain untouched and secure.
+
 Alternatively, you can manually download the latest version from the [Releases](https://github.com/hthienloc/pvz2-gardendless-appimage/releases) page.
 
 ## Credits
