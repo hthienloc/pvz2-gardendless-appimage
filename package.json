@@ -26,7 +26,8 @@
       "target": [
         "AppImage"
       ],
-      "category": "Game"
+      "category": "Game",
+      "icon": "assets/icons/icon.png"
     }
   }
 }

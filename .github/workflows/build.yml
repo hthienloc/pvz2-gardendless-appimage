@@ -38,6 +38,10 @@ jobs:
           mkdir -p dist
           cp -r game_web/docs/* dist/
 
+      - name: Get version
+        id: package-version
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
       - name: Build Electron App
         run: npm run electron:build
 
@@ -46,8 +50,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         with:
           files: dist_electron/*.AppImage
-          tag_name: v0.8.2
-          name: "PvZ2 Gardendless v0.8.2"
+          tag_name: v${{ steps.package-version.outputs.version }}
+          name: "PvZ2 Gardendless v${{ steps.package-version.outputs.version }}"
           body: "Automated Linux build for PvZ2 Gardendless."
           draft: true
           prerelease: false
