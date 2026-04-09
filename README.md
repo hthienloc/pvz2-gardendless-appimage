@@ -14,6 +14,15 @@ A standalone [Electron](https://www.electronjs.org/) runner for the [PvZ2 Garden
 3. Wait for the build to complete.
 4. Download the `AppImage` from the release artifacts.
 
+## Updates
+
+This AppImage supports **automatic updates** via the standard AppImage update mechanism. We recommend using a manager like:
+
+- [Gear Lever](https://mioseclab.github.io/GearLever/)
+- [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher)
+
+Alternatively, you can manually download the latest version from the [Releases](https://github.com/hthienloc/pvz2-gardendless-appimage/releases) page.
+
 ## Credits
 
 - Game by [Gzh0821](https://github.com/Gzh0821/pvzge_web).

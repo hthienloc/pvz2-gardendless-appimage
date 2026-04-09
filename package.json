@@ -6,7 +6,7 @@
   "main": "electron-main.js",
   "scripts": {
     "electron:dev": "electron .",
-    "electron:build": "electron-builder -l AppImage -c.publish=never"
+    "electron:build": "electron-builder -l AppImage --publish never"
   },
   "devDependencies": {
     "electron": "^41.2.0",
@@ -15,6 +15,13 @@
   "build": {
     "appId": "com.pvzge.gardenless",
     "productName": "PvZ2 Gardendless",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "hthienloc",
+        "repo": "pvz2-gardendless-appimage"
+      }
+    ],
     "directories": {
       "output": "dist_electron"
     },
