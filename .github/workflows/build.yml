@@ -58,7 +58,7 @@ jobs:
             dist_electron/*.AppImage
             dist_electron/*.zsync
           tag_name: v${{ steps.package-version.outputs.version }}
-          name: "PvZ2 Gardendless v${{ steps.package-version.outputs.version }}"
+          name: "v${{ steps.package-version.outputs.version }}"
           body: |
             Automated Linux build for PvZ2 Gardendless.
 
