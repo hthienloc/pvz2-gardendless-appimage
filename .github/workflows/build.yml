@@ -4,7 +4,6 @@ on:
     branches:
       - main
     paths:
-      - 'src-tauri/**'
       - '.github/workflows/build.yml'
       - 'package.json'
       - 'electron-main.js'
@@ -95,7 +94,7 @@ jobs:
                 --manager GithubUpdater \
                 repo_url=https://github.com/hthienloc/pvz2-gardendless-appimage \
                 repo_filename=PvZ2-Gardendless-*.AppImage \
-                allow_prereleases=false
+                allow_prereleases=true
             ```
 
             ### 🔄 Automatic Updates
@@ -104,7 +103,7 @@ jobs:
             flatpak run it.mijorus.gearlever --update --all --yes
             ```
           draft: true
-          prerelease: false
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

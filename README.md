@@ -32,7 +32,7 @@ flatpak run it.mijorus.gearlever --set-update-source ~/AppImages/pvz2gardendless
     --manager GithubUpdater \
     repo_url=https://github.com/hthienloc/pvz2-gardendless-appimage \
     repo_filename=PvZ2-Gardendless-*.AppImage \
-    allow_prereleases=false
+    allow_prereleases=true
 ```
 
 ## 📦 Installation
