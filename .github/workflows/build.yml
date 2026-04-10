@@ -42,6 +42,22 @@ jobs:
         id: package-version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
+      - name: Update README version
+        run: |
+          VERSION=${{ steps.package-version.outputs.version }}
+          # Update version numbers in README.md
+          sed -i "s/v[0-9]\+\.[0-9]\+\.[0-9]\+/v$VERSION/g" README.md
+          sed -i "s/Gardendless-[0-9]\+\.[0-9]\+\.[0-9]\+/Gardendless-$VERSION/g" README.md
+          
+          # Setup git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Commit and push if changed
+          git add README.md
+          git commit -m "chore: update README version to v$VERSION [skip ci]" || echo "No changes to commit"
+          git push
+
       - name: Build Electron App
         run: npm run electron:build
         env:
@@ -64,19 +80,26 @@ jobs:
 
             ### 🚀 Quick Start (CLI)
             ```bash
-            # Download the AppImage
+            # 1. Download the AppImage
             wget https://github.com/hthienloc/pvz2-gardendless-appimage/releases/download/v${{ steps.package-version.outputs.version }}/PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage
 
-            # Install and integrate with Gear Lever
-            flatpak run it.mijorus.gearlever --integrate PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage
+            # 2. Install and integrate with Gear Lever
+            flatpak run it.mijorus.gearlever --integrate PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage --yes
+
+            # 3. Configure GitHub auto-updates
+            # Note: Gear Lever usually renames it to ~/AppImages/pvz2gardendless.appimage
+            flatpak run it.mijorus.gearlever --set-update-source ~/AppImages/pvz2gardendless.appimage \
+                --manager GithubUpdater \
+                repo_url=https://github.com/hthienloc/pvz2-gardendless-appimage \
+                repo_filename=PvZ2-Gardendless-*.AppImage \
+                allow_prereleases=false
             ```
 
-            ### 🔄 Manual Update (Gear Lever)
-            If auto-update is not working, please use the following settings in **Gear Lever**:
-            - **Source**: `Github`
-            - **Repo URL**: `https://github.com/hthienloc/pvz2-gardendless-appimage`
-            - **Release file name**: `PvZ2-Gardendless-*.AppImage`
-            - **Allow pre-releases**: Disabled
+            ### 🔄 Automatic Updates
+            Gear Lever notifies you when a new version is available. To manually check and install updates for all integrated apps via CLI, use:
+            ```bash
+            flatpak run it.mijorus.gearlever --update --all --yes
+            ```
           draft: true
           prerelease: false
         env:
