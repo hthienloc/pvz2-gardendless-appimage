@@ -71,7 +71,6 @@ jobs:
         with:
           files: |
             dist_electron/*.AppImage
-            dist_electron/*.zsync
           tag_name: v${{ steps.package-version.outputs.version }}
           name: "v${{ steps.package-version.outputs.version }}"
           body: |
@@ -103,7 +102,7 @@ jobs:
             flatpak run it.mijorus.gearlever --update --all --yes
             ```
           draft: true
-          prerelease: true
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
