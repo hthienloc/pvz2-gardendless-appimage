@@ -17,13 +17,16 @@ A high-performance standalone runner for the [PvZ2 Gardendless](https://github.c
 ## ⚡ Quick Start (CLI)
 
 ```sh
-# 1. Download the AppImage
+# 1. Install Gear Lever (if not already installed)
+flatpak install flathub it.mijorus.gearlever -y
+
+# 2. Download the AppImage
 wget https://github.com/hthienloc/pvz2-gardendless-appimage/releases/download/v0.8.2/PvZ2-Gardendless-0.8.2.AppImage
 
-# 2. Install and integrate with Gear Lever
+# 3. Install and integrate with Gear Lever
 flatpak run it.mijorus.gearlever --integrate PvZ2-Gardendless-0.8.2.AppImage --yes
 
-# 3. Configure GitHub auto-updates
+# 4. Configure GitHub auto-updates
 # Note: Gear Lever usually renames it to ~/AppImages/pvz2gardendless.appimage
 flatpak run it.mijorus.gearlever --set-update-source ~/AppImages/pvz2gardendless.appimage \
     --manager GithubUpdater \
