@@ -3,12 +3,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.github/workflows/build.yml'
-      - 'package.json'
-      - 'electron-main.js'
   schedule:
-    - cron: '0 0 1,15 * *' # Chạy vào ngày 1 và 15 hằng tháng (~mỗi 2 tuần)
+    - cron: '0 0 1,15 * *'
   workflow_dispatch:
 
 permissions:
@@ -17,23 +13,62 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    outputs:
+      new_version: ${{ steps.check-version.outputs.new_version }}
+      should_build: ${{ steps.check-version.outputs.should_build }}
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get current version
+        id: current-version
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
+      - name: Get latest upstream version
+        id: upstream-version
+        run: |
+          git fetch --tags https://github.com/Gzh0821/pvzge_web.git +refs/tags/*:refs/tags/ 2>/dev/null
+          LATEST=$(git ls-remote --tags https://github.com/Gzh0821/pvzge_web.git | grep -E 'refs/tags/v[0-9]' | cut -d/ -f3 | sed 's/^v//' | sort -V | tail -1)
+          echo "version=$LATEST" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Check for new version
+        id: check-version
+        run: |
+          CURRENT="${{ steps.current-version.outputs.version }}"
+          UPSTREAM="${{ steps.upstream-version.outputs.version }}"
+          echo "Current: $CURRENT"
+          echo "Upstream: $UPSTREAM"
+          if [ "$UPSTREAM" != "$CURRENT" ] && [ -n "$UPSTREAM" ]; then
+            echo "new_version=$UPSTREAM" >> $GITHUB_OUTPUT
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          else
+            echo "new_version=$CURRENT" >> $GITHUB_OUTPUT
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node
+        if: steps.check-version.outputs.should_build == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      - name: Update version in package.json
+        if: steps.check-version.outputs.should_build == 'true'
+        run: |
+          NEW_VERSION=${{ steps.check-version.outputs.new_version }}
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$NEW_VERSION\"/" package.json
+
       - name: Install dependencies
+        if: steps.check-version.outputs.should_build == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
           npm install
 
       - name: Clone game source
+        if: steps.check-version.outputs.should_build == 'true'
         run: |
-          git clone https://github.com/Gzh0821/pvzge_web.git game_web
+          git clone --depth 1 --branch v${{ steps.check-version.outputs.new_version }} https://github.com/Gzh0821/pvzge_web.git game_web
           mkdir -p dist
           cp -r game_web/docs/* dist/
 
@@ -42,32 +77,30 @@ jobs:
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
       - name: Update README version
+        if: steps.check-version.outputs.should_build == 'true'
         run: |
           VERSION=${{ steps.package-version.outputs.version }}
-          # Update version numbers in README.md
           sed -i "s/v[0-9]\+\.[0-9]\+\.[0-9]\+/v$VERSION/g" README.md
-          sed -i "s/Gardendless-[0-9]\+\.[0-9]\+\.[0-9]\+/Gardendless-$VERSION/g" README.md
-          
-          # Setup git
+          sed -i "s/PvZ2-Gardendless-[0-9]\+\.[0-9]\+\.[0-9]\+/PvZ2-Gardendless-$VERSION/g" README.md
+
+      - name: Create version tag
+        if: steps.check-version.outputs.should_build == 'true'
+        run: |
+          VERSION=${{ steps.package-version.outputs.version }}
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Commit and push if changed
-          git add README.md
-          git commit -m "chore: update README version to v$VERSION [skip ci]" || echo "No changes to commit"
-          git push
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
 
       - name: Build Electron App
+        if: steps.check-version.outputs.should_build == 'true'
         run: npm run electron:build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: List built files
-        run: ls -R dist_electron/
-
       - name: Create Release
+        if: steps.check-version.outputs.should_build == 'true'
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         with:
           files: |
             dist_electron/*.AppImage
@@ -78,28 +111,14 @@ jobs:
 
             ### 🚀 Quick Start (CLI)
             ```bash
-            # 1. Install Gear Lever (if not already installed)
             flatpak install flathub it.mijorus.gearlever -y
-
-            # 2. Download the AppImage
             wget https://github.com/${{ github.repository }}/releases/download/v${{ steps.package-version.outputs.version }}/PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage
-
-            # 3. Install and integrate with Gear Lever
             flatpak run it.mijorus.gearlever --integrate PvZ2-Gardendless-${{ steps.package-version.outputs.version }}.AppImage --yes
-
-            # 4. Configure GitHub auto-updates
-            # Note: Gear Lever usually renames it to ~/AppImages/pvz2gardendless.appimage
             flatpak run it.mijorus.gearlever --set-update-source ~/AppImages/pvz2gardendless.appimage \
                 --manager GithubUpdater \
                 repo_url=https://github.com/hthienloc/pvz2-gardendless-appimage \
                 repo_filename=PvZ2-Gardendless-*.AppImage \
                 allow_prereleases=true
-            ```
-
-            ### 🔄 Automatic Updates
-            Gear Lever notifies you when a new version is available. To manually check and install updates for all integrated apps via CLI, use:
-            ```bash
-            flatpak run it.mijorus.gearlever --update --all --yes
             ```
           draft: false
           prerelease: false
@@ -108,7 +127,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifacts
+        if: steps.check-version.outputs.should_build == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: electron-appimage
           path: dist_electron/*.AppImage
+
+      - name: No update needed
+        if: steps.check-version.outputs.should_build == 'false'
+        run: echo "No new version found. Current version ${{ steps.current-version.outputs.version }} is up to date."
